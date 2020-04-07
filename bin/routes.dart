@@ -8,26 +8,26 @@ class ServerRoutes {
   final Map<String, dynamic> _routes = {
     'GET': {
       '/': (HttpRequest request) {
-        _handlers.handleApiMirror(request);
+        _handlers.handleOtherRequests(request);
       },
       '/api/mirror': (HttpRequest request) {
-        _handlers.handleApiMirror(request);
+        _handlers.mirror.handleApiMirror(request);
       },
       '/api/user': (HttpRequest request) {
-        _handlers.handleSingleUser(request);
+        _handlers.user.handleSingleUser(request);
         //returns a single user
       },
       '/api/users': (HttpRequest request) {
-        _handlers.handlemultiUser(request);
+        _handlers.user.handlemultiUser(request);
         //retrns a list(Array) of users
       },
       '/api/user/get': (HttpRequest request) {
-        _handlers.handleGetuserWithId(request);
+        _handlers.user.handleGetuserWithId(request);
       }
     },
     'POST': {
       '/api/mirror': (HttpRequest request) {
-        _handlers.handleApiMirror(request);
+        _handlers.mirror.handleApiMirror(request);
       },
       '/': (HttpRequest request) {
         _handlers.handleOtherRequests(request);
