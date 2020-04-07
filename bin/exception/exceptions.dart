@@ -1,27 +1,35 @@
-class QuickMockApi implements Exception {
+import 'dart:convert';
+
+abstract class QuickMockApiException implements Exception {
   final int statusCode;
   final String fix;
   final String message;
   final bool success;
-  QuickMockApi(this.statusCode, this.fix, this.message, this.success);
+  QuickMockApiException(this.statusCode, this.fix, this.message, this.success);
+  String toJson() => jsonEncode(toMap());
+  Map toMap();
 }
 
-class InternalServerException implements QuickMockApi {
+class InternalServerException implements QuickMockApiException {
   final int statusCode = 500;
   final String fix = 'internal server error';
   final String message = 'Internal server error';
   final bool success = false;
   InternalServerException() : super();
 
+  @override
   Map toMap() => {
         'success': success,
         'message': message,
         'fix': fix,
         'status_code': statusCode
       };
+
+  @override
+  String toJson() => jsonEncode(toMap());
 }
 
-class BadRequestException implements QuickMockApi {
+class BadRequestException implements QuickMockApiException {
   final int statusCode = 400;
   final String fix = 'encode to a JSON string or x-www-form-urlendoced';
   final String message =
@@ -29,10 +37,14 @@ class BadRequestException implements QuickMockApi {
   final bool success = false;
   BadRequestException() : super();
 
+  @override
   Map toMap() => {
         'success': success,
         'message': message,
         'fix': fix,
         'status_code': statusCode
       };
+
+  @override
+  String toJson() => jsonEncode(toMap());
 }
