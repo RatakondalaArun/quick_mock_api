@@ -13,6 +13,10 @@ class ResponseHandlers {
         String jsonEncodedData = jsonEncode(writeObject);
         response
           ..headers.set(HttpHeaders.contentTypeHeader, contentType)
+          ..headers.add('Access-Control-Allow-Headers', '*')
+          ..headers.add("Access-Control-Allow-Origin", "*")
+          ..headers.add(
+              "Access-Control-Allow-Methods", "POST,GET,DELETE,PUT,OPTIONS")
           ..statusCode = statusCode
           ..write(jsonEncodedData)
           ..close();
