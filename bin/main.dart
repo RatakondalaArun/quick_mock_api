@@ -19,7 +19,6 @@ main() async {
     fs,
     allowDirectoryListing: false,
     source: fs.currentDirectory.childDirectory('bin\\web'),
-    publicPath: '/',
   );
   print(vDir.source);
 
@@ -32,7 +31,8 @@ main() async {
   );
 
   //index.html
-  app.fallback(vDir.handleRequest);
+  app.all('/*', vDir.handleRequest);
+  // app.fallback(vDir.handleRequest);
   // mirrors
   // get
   app.get('/api/mirror', (req, res) {
@@ -47,7 +47,7 @@ main() async {
       ),
     );
   });
-  // post and
+  // post
   app.post('/api/mirror', (req, res) async {
     res.headers.addAll({'content-type': 'application/json'});
     await req.parseBody();
@@ -82,7 +82,7 @@ main() async {
           limit: int.parse(req.queryParameters['limit'] ?? '0')),
     }));
   });
-  //
+  //users/:id
   app.get('/api/users/int:id', (req, res) {
     res.headers.addAll({'content-type': 'application/json'});
     return res.write(jsonEncode({
@@ -91,9 +91,9 @@ main() async {
       'data': MockUser.generateWithId(req.params['id']).toMap(),
     }));
   });
+  // redirects
   app.all('/api/*', (req, res) => res.redirect('/'));
   app.all('/api', (req, res) => res.redirect('/'));
-  app.all('/*', (req, res) => res.redirect('/'));
   app.all('favicon.ico', (req, res) => AngelHttpException.notFound());
 
   await http.startServer(address, port);
