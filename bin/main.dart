@@ -4,7 +4,6 @@ import 'package:angel_framework/angel_framework.dart';
 import 'package:angel_framework/http.dart';
 import 'package:angel_static/angel_static.dart';
 import 'package:file/local.dart' as fileSystem;
-import 'package:logging/logging.dart';
 
 import 'mock/mock_user.dart';
 
@@ -23,9 +22,13 @@ main() async {
     publicPath: '/',
   );
 
-  app.fallback((req, res) {
-    print('[${DateTime.now()}]\t${req.ip}\t${req.method}\t${req.path}');
-  });
+  app.all(
+    '*',
+    (req, res) {
+      print('[${DateTime.now()}]\t${req.ip}\t${req.method}\t${req.path}');
+      return true;
+    },
+  );
 
   //index.html
   app.fallback(vDir.handleRequest);
