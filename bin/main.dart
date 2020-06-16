@@ -77,7 +77,8 @@ main() async {
     return res.write(jsonEncode({
       'status_code': 200,
       'is_error': false,
-      'data': MockUser.generateAsMap(),
+      'data': MockUser.generateAsMap(
+          limit: int.parse(req.queryParameters['limit'] ?? '0')),
     }));
   });
   //
@@ -92,7 +93,7 @@ main() async {
   app.all('/api/*', (req, res) => res.redirect('/'));
   app.all('/api', (req, res) => res.redirect('/'));
   app.all('/*', (req, res) => res.redirect('/'));
-  app.all('favicon.ico', (req, res) => res.close());
+  app.all('favicon.ico', (req, res) => AngelHttpException.notFound());
 
   await http.startServer(address, port);
   print('Server is listining at port ${http.server.port}');
