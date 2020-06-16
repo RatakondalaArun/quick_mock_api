@@ -18,9 +18,10 @@ main() async {
     app,
     fs,
     allowDirectoryListing: false,
-    source: fs.currentDirectory.childDirectory('bin/web'),
+    source: fs.currentDirectory.childDirectory('bin\\web'),
     publicPath: '/',
   );
+  print(vDir.source);
 
   app.all(
     '*',
