@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:angel_cors/angel_cors.dart';
 import 'package:angel_framework/angel_framework.dart';
 import 'package:angel_framework/http.dart';
 import 'package:angel_static/angel_static.dart';
@@ -21,6 +22,7 @@ main() async {
     source: fs.currentDirectory.childDirectory('bin\\web'),
   );
   print(vDir.source);
+  app.fallback(cors());
 
   app.all(
     '*',
