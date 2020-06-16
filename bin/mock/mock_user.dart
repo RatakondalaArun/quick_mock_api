@@ -9,6 +9,17 @@ class MockUser {
   final String email;
   MockUser({this.userName, this.id, this.email});
 
+  static MockUser randomUser() {
+    String userName = _getRandomUserName();
+    int id = _getRandomId();
+    String email = userName + id.toString() + '@' + _getRandomEmailDomain();
+    return MockUser(
+      userName: userName,
+      id: id,
+      email: email,
+    );
+  }
+
   static MockUser generateWithId(int id) {
     String userName = _getRandomUserName();
     id = int.parse(

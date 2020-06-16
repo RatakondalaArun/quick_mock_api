@@ -1,4 +1,7 @@
 name: quick_mock_api
 version: 0.0.1
+
 dependencies:
-  http: any
+  http: ^0.12.1
+  angel_framework: ^2.1.1
+  angel_static: ^2.1.3+2
